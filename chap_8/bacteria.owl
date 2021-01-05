@@ -1,0 +1,263 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:owl="http://www.w3.org/2002/07/owl#"
+         xml:base="http://lesfleursdunormal.fr/static/_downloads/bacteria.owl"
+         xmlns="http://lesfleursdunormal.fr/static/_downloads/bacteria.owl#">
+
+<owl:Ontology rdf:about="http://lesfleursdunormal.fr/static/_downloads/bacteria.owl"/>
+
+<owl:ObjectProperty rdf:about="#has_shape">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Bacterium"/>
+  <rdfs:range rdf:resource="#Shape"/>
+  <owl:inverseOf rdf:resource="#is_shape_of"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#has_grouping">
+  <rdfs:domain rdf:resource="#Bacterium"/>
+  <rdfs:range rdf:resource="#Grouping"/>
+  <owl:inverseOf rdf:resource="#is_grouping_of"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#is_shape_of">
+  <rdfs:domain rdf:resource="#Shape"/>
+  <rdfs:range rdf:resource="#Bacterium"/>
+  <owl:inverseOf rdf:resource="#has_shape"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#is_grouping_of">
+  <rdfs:domain rdf:resource="#Grouping"/>
+  <rdfs:range rdf:resource="#Bacterium"/>
+  <owl:inverseOf rdf:resource="#has_grouping"/>
+</owl:ObjectProperty>
+
+<owl:DatatypeProperty rdf:about="#gram_positive">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Bacterium"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#nb_colonies">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Bacterium"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+</owl:DatatypeProperty>
+
+<owl:Class rdf:about="#Shape">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Round">
+  <rdfs:subClassOf rdf:resource="#Shape"/>
+  <owl:disjointWith rdf:resource="#Rod"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Rod">
+  <rdfs:subClassOf rdf:resource="#Shape"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Grouping">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Isolated">
+  <rdfs:subClassOf rdf:resource="#Grouping"/>
+</owl:Class>
+
+<owl:Class rdf:about="#InPair">
+  <rdfs:subClassOf rdf:resource="#Grouping"/>
+</owl:Class>
+
+<owl:Class rdf:about="#InCluster">
+  <rdfs:subClassOf rdf:resource="#Grouping"/>
+</owl:Class>
+
+<owl:Class rdf:about="#InChain">
+  <rdfs:subClassOf rdf:resource="#Grouping"/>
+</owl:Class>
+
+<owl:Class rdf:about="#InSmallChain">
+  <rdfs:subClassOf rdf:resource="#InChain"/>
+  <owl:disjointWith rdf:resource="#InLongChain"/>
+</owl:Class>
+
+<owl:Class rdf:about="#InLongChain">
+  <rdfs:subClassOf rdf:resource="#InChain"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Bacterium">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Pseudomonas">
+  <rdfs:subClassOf rdf:resource="#Bacterium"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_shape"/>
+      <owl:someValuesFrom rdf:resource="#Rod"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_shape"/>
+      <owl:allValuesFrom rdf:resource="#Rod"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_grouping"/>
+      <owl:someValuesFrom>
+        <owl:Class>
+          <owl:unionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="#Isolated"/>
+            <rdf:Description rdf:about="#InPair"/>
+          </owl:unionOf>
+        </owl:Class>
+      </owl:someValuesFrom>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#gram_positive"/>
+      <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</owl:hasValue>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#Coccus">
+  <rdfs:subClassOf rdf:resource="#Bacterium"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#Bacterium"/>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#has_shape"/>
+          <owl:someValuesFrom rdf:resource="#Round"/>
+        </owl:Restriction>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#has_shape"/>
+          <owl:allValuesFrom rdf:resource="#Round"/>
+        </owl:Restriction>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+</owl:Class>
+
+<owl:Class rdf:about="#Bacillus">
+  <rdfs:subClassOf rdf:resource="#Bacterium"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#Bacterium"/>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#has_shape"/>
+          <owl:someValuesFrom rdf:resource="#Rod"/>
+        </owl:Restriction>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#has_shape"/>
+          <owl:allValuesFrom rdf:resource="#Rod"/>
+        </owl:Restriction>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+</owl:Class>
+
+<owl:Class rdf:about="#Staphylococcus">
+  <rdfs:subClassOf rdf:resource="#Coccus"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#Bacterium"/>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#has_shape"/>
+          <owl:someValuesFrom rdf:resource="#Round"/>
+        </owl:Restriction>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#has_shape"/>
+          <owl:allValuesFrom rdf:resource="#Round"/>
+        </owl:Restriction>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#has_grouping"/>
+          <owl:someValuesFrom rdf:resource="#InCluster"/>
+        </owl:Restriction>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#gram_positive"/>
+          <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:hasValue>
+        </owl:Restriction>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+</owl:Class>
+
+<owl:Class rdf:about="#Streptococcus">
+  <rdfs:subClassOf rdf:resource="#Coccus"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#Bacterium"/>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#has_shape"/>
+          <owl:someValuesFrom rdf:resource="#Round"/>
+        </owl:Restriction>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#has_shape"/>
+          <owl:allValuesFrom rdf:resource="#Round"/>
+        </owl:Restriction>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#has_grouping"/>
+          <owl:someValuesFrom rdf:resource="#InSmallChain"/>
+        </owl:Restriction>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#has_grouping"/>
+          <owl:allValuesFrom>
+            <owl:Class>
+              <owl:complementOf rdf:resource="#Isolated"/>
+            </owl:Class>
+          </owl:allValuesFrom>
+        </owl:Restriction>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#gram_positive"/>
+          <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:hasValue>
+        </owl:Restriction>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+</owl:Class>
+
+<Round rdf:about="#round1">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+</Round>
+
+<InCluster rdf:about="#in_cluster1">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+</InCluster>
+
+<Bacterium rdf:about="#unknown_bacterium">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+  <has_shape rdf:resource="#round1"/>
+  <has_grouping rdf:resource="#in_cluster1"/>
+  <gram_positive rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</gram_positive>
+  <nb_colonies rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">6</nb_colonies>
+</Bacterium>
+
+<owl:AllDisjointClasses>
+  <owl:members rdf:parseType="Collection">
+    <rdf:Description rdf:about="#Bacterium"/>
+    <rdf:Description rdf:about="#Shape"/>
+    <rdf:Description rdf:about="#Grouping"/>
+  </owl:members>
+</owl:AllDisjointClasses>
+
+<owl:AllDisjointClasses>
+  <owl:members rdf:parseType="Collection">
+    <rdf:Description rdf:about="#Isolated"/>
+    <rdf:Description rdf:about="#InPair"/>
+    <rdf:Description rdf:about="#InCluster"/>
+    <rdf:Description rdf:about="#InChain"/>
+  </owl:members>
+</owl:AllDisjointClasses>
+
+
+</rdf:RDF>
