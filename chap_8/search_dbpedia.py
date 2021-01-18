@@ -4,7 +4,7 @@ app = Flask(__name__)
  
 from owlready2 import *
  
-QUADSTORE = "/home/jiba/tmp/dbpedia.sqlite3"
+QUADSTORE = "/tmp/dbpedia.sqlite3"
 default_world.set_backend(filename = QUADSTORE)
  
 dbpedia  = get_ontology("http://wikidata.dbpedia.org/ontology/")
